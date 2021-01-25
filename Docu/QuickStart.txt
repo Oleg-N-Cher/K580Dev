@@ -1,0 +1,9 @@
+- Install z88dk and set up the system variable ZCCCFG
+  http://nightly.z88dk.org
+- Copy K580Dev/Bin/z88dk to the folder where z88dk is installed
+- Open examples: File -> Open -> /Mod, press F12 to build
+
+- Установите z88dk и системную переменную ZCCCFG
+  http://nightly.z88dk.org/
+- Скопируйте K580Dev/Bin/z88dk в папку с установленным z88dk
+- Примеры: File -> Open -> /Mod, жмите F12 для сборки

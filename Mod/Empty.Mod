@@ -1,0 +1,6 @@
+MODULE Empty; (*$MAIN*) 
+IMPORT RK86;
+
+BEGIN
+  RK86.QUIT
+END Empty.
