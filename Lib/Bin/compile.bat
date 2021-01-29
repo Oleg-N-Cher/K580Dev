@@ -6,7 +6,7 @@ EXIT
 
 :z88dk
 
-SET CC=zcc.exe +pmd85 -m8080 -vn -x -I. -I.. -I..\C
+SET CC=zcc.exe +rk86 -O3 -vn -x -I. -I.. -I..\C
 SET SmartLib=..\..\..\Bin\smartlib.exe
 IF EXIST ..\C\%1.c GOTO c_lib
 

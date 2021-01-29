@@ -9,7 +9,7 @@ EXIT
 SET MainMod=%1
 SET Opt=-SO3 --opt-code-size --max-allocs-per-node200000
 ::SET CC=zcc.exe +zx -vn -x -clib=sdcc_iy %Opt% -Cs"--disable-warning 85" -Cs"--disable-warning 59"
-SET CC=zcc.exe +pmd85 -m8080 -vn -x
+SET CC=zcc.exe +rk86 -O3 -vn -x
 SET smartlib=..\..\..\Bin\smartlib.exe
 
 CD ..\Obj

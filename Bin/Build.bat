@@ -1,19 +1,50 @@
 @ECHO OFF
-IF NOT "%ZCCCFG%"=="" GOTO z88dk
-ECHO Please install z88dk and set up the system variable ZCCCFG
-PAUSE
-EXIT
+SET K580Dev=%XDev%\K580Dev
+IF "%XDev%"=="" SET K580Dev=..
 
-:z88dk
+IF "%MainMod%"=="" SET MainMod=%1
+IF "%MainMod%"=="%1" GOTO Build
 
-CD ..\Obj
+:Compile
 
-SET MainMod=%1
-SET Include=-I..\Lib -I..\Lib\C
-SET Libraries=%Libraries% -L..\Lib -lRK86
+SET SaveOptions=%Options%
+SET SaveInclude=%Include%
+CALL %K580Dev%\Bin\Compile.bat %1
+SET Options=%SaveOptions%
+SET Include=%SaveInclude%
 
-zcc +pmd85 -m8080 %Include% %Libraries% %MainMod%.c -o %MainMod%.bin
+:Build
+
+SET Options=%Options% +rk86 -O3
+SET Include=%Include% -I%K580Dev%\Lib\C -I%K580Dev%\Lib\Obj
+SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86
+IF "%Clean%"=="" SET Clean=TRUE
+IF "%Start%"=="" SET Start=TRUE
+IF "%Pause%"=="" SET Pause=FALSE
+
+SET CC=zcc.exe %Options% %Modules% %Libraries%
+
+IF EXIST %MainMod% GOTO Config
+
+%CC% %MainMod%.c -o %MainMod%.bin -I. -I..\Lib -I%K580Dev%\Lib %Include%
+GOTO Link
+
+:Config
+
+%CC% %MainMod%.c -o %MainMod%.bin -I%MainMod% %Include%
+
+:Link
+
 IF errorlevel 1 PAUSE
 
-..\Bin\bin2rk %MainMod%.bin >NUL
+%K580Dev%\Bin\bin2rk.exe %MainMod%.bin >NUL
 MOVE %MainMod%.rk ..\%MainMod%.rka >NUL
+
+IF NOT "%Clean%"=="TRUE" GOTO Done
+DEL *.bin %MainMod%.oh %MainMod%.o
+IF "%Modules%"=="" DEL %MainMod%.c
+
+:Done
+
+IF "%Pause%"=="TRUE" PAUSE
+IF "%Start%"=="TRUE" START ..\%MainMod%.rka

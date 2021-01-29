@@ -32,7 +32,7 @@ typedef signed char   BYTE;
 typedef unsigned char CHAR;
 typedef int           SHORTINT;
 typedef long          INTEGER;   // 32 bit
-typedef long long     LONGINT;   // 64 bit
+typedef long          LONGINT;   // alias for INTEGER
 typedef unsigned char SET;       // 8 bit
 typedef float         SHORTREAL;
 typedef float         REAL;
@@ -42,12 +42,12 @@ typedef int           SYSTEM_ARRLEN; // see also OPM.IndexSize and MaxIndex
 
 // Unsigned variants are for use by shift and rotate macros
 
-typedef unsigned char      __U_BYTE;
-typedef unsigned char      __U_CHAR;
-typedef unsigned int       __U_SHORTINT;
-typedef unsigned long      __U_INTEGER;
-typedef unsigned char      __U_SET;
-typedef unsigned long long __U_LONGINT;
+typedef unsigned char __U_BYTE;
+typedef unsigned char __U_CHAR;
+typedef unsigned int  __U_SHORTINT;
+typedef unsigned long __U_INTEGER;
+typedef unsigned char __U_SET;
+typedef unsigned long __U_LONGINT;
 
 /* runtime system routines */
 extern long SYSTEM_DIV();
