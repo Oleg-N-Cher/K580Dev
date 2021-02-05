@@ -72,6 +72,67 @@ void RK86_PUTSTR (unsigned char *str) __naked __z88dk_fastcall {
 } //RK86_PUTSTR
 
 /*--------------------------------- Cut here ---------------------------------*/
+int RK86_RND16 (void) __naked {
+/*
+Inputs:
+   (seed1) contains a 16-bit seed value
+   (seed2) contains a NON-ZERO 16-bit seed value
+Outputs:
+   HL is the result
+   BC is the result of the LCG, so not that great of quality
+   DE is preserved
+Destroys:
+   AF
+cycle: 4,294,901,760 (almost 4.3 billion)
+160cc
+26 bytes
+https://zx-pk.ru/threads/32499-portirovanie-desolate-na-vektor-06ts/page3.html
+*/
+  #asm
+PUBLIC _RK86_RND8
+_RK86_RND8:
+        LD   HL, (seed1)
+        LD   B, H
+        LD   C, L
+        ADD  HL, HL
+        ADD  HL, HL
+        INC  L
+        ADD  HL, BC
+        LD   (seed1), HL
+        LD   HL, (seed2)
+        ADD  HL, HL
+        SBC  A, A
+        AND  0b00101101
+        XOR  L
+        LD   L, A
+        LD   (seed2), HL
+        ADD  HL, BC
+        RET
+seed1:  DW   12345
+seed2:  DW   54321
+  #endasm
+} //RK86_RND16
+
+/*--------------------------------- Cut here ---------------------------------*/
+void RK86_WAIT (unsigned int time) __naked __z88dk_fastcall {
+  #asm
+        EX   DE, HL
+        LD   HL, (ref1)
+WAIT1:  LD   A, (HL)
+        INC  HL
+        LD   A, (HL)
+        INC  HL
+        DEC  DE
+        LD   A, E
+        OR   D
+        JP   NZ, WAIT1
+        LD   (ref1), HL
+        RET
+ref1:   DW   0
+  #endasm
+} //RK86_WAIT
+
+/*--------------------------------- Cut here ---------------------------------*/
 void RK86_QUIT (void) __naked {
   #asm
         JP   0F875H    ; ВЫХОД В МОНИТОР
