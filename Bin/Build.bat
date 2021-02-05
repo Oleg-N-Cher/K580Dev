@@ -21,6 +21,7 @@ SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86
 IF "%Clean%"=="" SET Clean=TRUE
 IF "%Start%"=="" SET Start=TRUE
 IF "%Pause%"=="" SET Pause=FALSE
+IF "%FileExt%"=="" SET FileExt=rk
 
 SET CC=zcc.exe %Options% %Modules% %Libraries%
 
@@ -38,7 +39,7 @@ GOTO Link
 IF errorlevel 1 PAUSE
 
 %K580Dev%\Bin\bin2rk.exe %MainMod%.bin >NUL
-MOVE %MainMod%.rk ..\%MainMod%.rka >NUL
+MOVE %MainMod%.rk ..\%MainMod%.%FileExt% >NUL
 
 IF NOT "%Clean%"=="TRUE" GOTO Done
 DEL *.bin %MainMod%.oh %MainMod%.o
@@ -47,4 +48,4 @@ IF "%Modules%"=="" DEL %MainMod%.c
 :Done
 
 IF "%Pause%"=="TRUE" PAUSE
-IF "%Start%"=="TRUE" START ..\%MainMod%.rka
+IF "%Start%"=="TRUE" START ..\%MainMod%.%FileExt%
