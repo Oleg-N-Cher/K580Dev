@@ -16,13 +16,7 @@ extern SYSTEM_PTR SYSTEM_NEWBLK (__U_SHORTINT size);
 
 void SYSTEM_HALT_m1 (BYTE n) __naked __z88dk_fastcall {
 __asm
-  LD   IY,#0x5C3A
-  IM   1
-  EI
-  LD   (HALTCODE$),HL
-  RST  8
-HALTCODE$:
-  .DB  0xFF ; Ruins the byte after that, but it is no longer needed
+  JP   0F875H
 __endasm;
 } //SYSTEM_HALT_m1
 
@@ -30,23 +24,10 @@ __endasm;
 int SYSTEM_XCHK (int i, int ub) { return __X(i, ub, "", 0); }
 
 /*--------------------------------- Cut here ---------------------------------*/
-void SYSTEM_STRAPND (CHAR *from, CHAR *to) __naked __z88dk_callee {
-    __asm  ; n = 0; while (to[n] != '\0') n++;
-           POP  HL
-           POP  DE           ; from[]
-           EX   (SP), HL     ; to[]
-           XOR  A
-           LD   C, A
-           LD   B, A
-           CPIR
-           DEC  HL
-           ; i = 0; do { to[n++] = from[i]; } while (from[i++] != '\0');
-           EX   DE, HL
-APND_STR$: CP   (HL)
-           LDI
-           JR   NZ, APND_STR$
-           RET
-    __endasm;
+void SYSTEM_STRAPND (CHAR *from, CHAR *to) {
+  unsigned int i, n;
+  n = 0; while (to[n] != '\0') n++;
+  i = 0; do { to[n++] = from[i]; } while (from[i++] != '\0');
 } //SYSTEM_STRAPND
 
 /*--------------------------------- Cut here ---------------------------------*/
@@ -59,29 +40,13 @@ int SYSTEM_STRCMP (CHAR *x, CHAR *y)
 }
 
 /*--------------------------------- Cut here ---------------------------------*/
-void SYSTEM_STRCOPY (CHAR *to, CHAR *from) __naked __z88dk_callee {
-__asm      ; n = 0; do { to[n] = from[n]; } while (from[n++] != '\0');
-           POP  HL
-           POP  DE           ; to[]
-           EX   (SP), HL     ; from[]
-           XOR  A
-COPY_STR$: CP   (HL)
-           LDI
-           JR   NZ, COPY_STR$
-           RET
-__endasm;
+void SYSTEM_STRCOPY (CHAR *to, CHAR *from) {
+  unsigned int n = 0; do { to[n] = from[n]; } while (from[n++] != '\0');
 } //SYSTEM_STRCOPY
 
 /*--------------------------------- Cut here ---------------------------------*/
-SHORTINT SYSTEM_STRLEN (CHAR *str) __z88dk_fastcall {
-    __asm  ; n = 0; while (str[n] != '\0') n++; return n;
-           XOR  A
-           LD   B, A
-           LD   C, A
-           CPIR
-           LD   HL, #0xFFFF
-           SBC  HL, BC
-    __endasm;
+SHORTINT SYSTEM_STRLEN (CHAR *str) {
+  unsigned int n = 0; while (str[n] != '\0') n++; return n;
 } //SYSTEM_STRLEN
 
 /*--------------------------------- Cut here ---------------------------------*/
@@ -111,10 +76,10 @@ INTEGER SYSTEM_ASHL (INTEGER x, BYTE n)
 } //SYSTEM_ASHL
 
 /*--------------------------------- Cut here ---------------------------------*/
-float SYSTEM_ABSD (float i)
-{
-	return __ABS(i);
-}
+long SYSTEM_ABS (long i) { return __ABS(i); }
+
+/*--------------------------------- Cut here ---------------------------------*/
+float SYSTEM_ABSD (float i) { return __ABS(i); }
 
 /*--------------------------------- Cut here ---------------------------------*/
 SYSTEM_PTR SYSTEM_NEWBLK (__U_SHORTINT size)

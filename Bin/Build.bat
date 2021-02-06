@@ -17,7 +17,7 @@ SET Include=%SaveInclude%
 
 SET Options=%Options% +rk86 -O3
 SET Include=%Include% -I%K580Dev%\Lib\C -I%K580Dev%\Lib\Obj
-SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86
+SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86 -lXDev
 IF "%Clean%"=="" SET Clean=TRUE
 IF "%Start%"=="" SET Start=TRUE
 IF "%Pause%"=="" SET Pause=FALSE
