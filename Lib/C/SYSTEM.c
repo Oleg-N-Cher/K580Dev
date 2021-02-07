@@ -76,10 +76,13 @@ INTEGER SYSTEM_ASHL (INTEGER x, BYTE n)
 } //SYSTEM_ASHL
 
 /*--------------------------------- Cut here ---------------------------------*/
-long SYSTEM_ABS (long i) { return __ABS(i); }
-
+SHORTINT  SYSTEM_ABSS (SHORTINT x) { return __ABS(x); }
 /*--------------------------------- Cut here ---------------------------------*/
-float SYSTEM_ABSD (float i) { return __ABS(i); }
+INTEGER   SYSTEM_ABS  (INTEGER x)  { return __ABS(x); }
+/*--------------------------------- Cut here ---------------------------------*/
+LONGINT   SYSTEM_ABSL (LONGINT x)  { return __ABS(x); }
+/*--------------------------------- Cut here ---------------------------------*/
+SHORTREAL SYSTEM_ABSF (REAL x)     { return __ABS(x); }
 
 /*--------------------------------- Cut here ---------------------------------*/
 SYSTEM_PTR SYSTEM_NEWBLK (__U_SHORTINT size)

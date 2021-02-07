@@ -13,8 +13,8 @@ GOTO compile
 
 :c_lib
 
-IF EXIST ..\C\%2.oh DEL %2.oh
-IF EXIST ..\C\%2.c DEL %2.c
+IF EXIST ..\C\%2.oh DEL %2.oh >nul 2>&1
+IF EXIST ..\C\%2.c DEL %2.c >nul 2>&1
 %smartlib% ..\C\%2.c %3 %4 %5
 
 :compile
