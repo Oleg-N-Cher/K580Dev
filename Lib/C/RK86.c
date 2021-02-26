@@ -108,6 +108,8 @@ _RK86_RND8:
         LD   (seed2), HL
         ADD  HL, BC
         RET
+PUBLIC _RK86_seed
+_RK86_seed:
 seed1:  DW   12345
 seed2:  DW   54321
   #endasm

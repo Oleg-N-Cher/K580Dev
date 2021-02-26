@@ -2,8 +2,7 @@
 #define RK86__oh
 
 
-#define __asm__ #asm
-#define __endasm__ #endasm
+extern unsigned int RK86_seed;
 
 void RK86_CURSOR (unsigned char x, unsigned char y) __z88dk_callee;
 unsigned char RK86_GETCHAR (void);
@@ -12,6 +11,7 @@ unsigned char RK86_PRESSED (void);
 void RK86_PUTCHAR (unsigned char ch) __z88dk_fastcall;
 void RK86_PUTHEX (unsigned char ch) __z88dk_fastcall;
 void RK86_PUTSTR (unsigned char *str) __z88dk_fastcall;
+#define RK86_RANDOMIZE(seed) RK86_seed = seed
 signed char RK86_RND8 (void);
 int RK86_RND16 (void);
 void RK86_WAIT (unsigned int time) __z88dk_fastcall;
