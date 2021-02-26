@@ -18,8 +18,6 @@
 //#define SYSTEM_TypeBoundProcDynCalls
 
 /* Std procs and operator mappings */
-//#define SYSTEM_DIV_as_in_C
-//#define SYSTEM_MOD_as_in_C
 #define SYSTEM_NoASSERT
 
 /* Runtime checks */

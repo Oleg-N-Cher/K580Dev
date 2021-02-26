@@ -1,7 +1,7 @@
 #include "SYSTEM.oh"
 
 /* runtime system routines */
-extern void SYSTEM_HALT_m1 (BYTE n) __z88dk_fastcall;
+extern void SYSTEM_HALT (BYTE n) __z88dk_fastcall;
 extern int SYSTEM_STRCMP (CHAR *x, CHAR *y);
 extern void SYSTEM_STRAPND (CHAR *from, CHAR *to) __z88dk_callee;
 extern void SYSTEM_STRCOPY (CHAR *to, CHAR *from) __z88dk_callee;
@@ -14,11 +14,11 @@ extern SYSTEM_PTR SYSTEM_NEWBLK (__U_SHORTINT size);
 #define SYSTEM_malloc(size)	(SYSTEM_PTR)malloc(size)
 /*================================== Header ==================================*/
 
-void SYSTEM_HALT_m1 (BYTE n) __naked __z88dk_fastcall {
+void SYSTEM_HALT (BYTE n) __naked __z88dk_fastcall {
 __asm
   JP   0F875H
 __endasm;
-} //SYSTEM_HALT_m1
+} //SYSTEM_HALT
 
 /*--------------------------------- Cut here ---------------------------------*/
 int SYSTEM_XCHK (int i, int ub) { return __X(i, ub, "", 0); }
@@ -83,6 +83,90 @@ INTEGER   SYSTEM_ABS  (INTEGER x)  { return __ABS(x); }
 LONGINT   SYSTEM_ABSL (LONGINT x)  { return __ABS(x); }
 /*--------------------------------- Cut here ---------------------------------*/
 SHORTREAL SYSTEM_ABSF (REAL x)     { return __ABS(x); }
+
+/*--------------------------------- Cut here ---------------------------------*/
+SHORTINT SYSTEM_DIVS (SHORTINT x, SHORTINT y)
+{
+  if (y > 0) {
+    if (x < 0) return -1 - (-1 - x) / y;
+    else       return x / y;
+  }
+  if (y < 0) {
+    if (x > 0) return -1 + (x - 1) / y;
+    else       return x / y;
+  }
+  __HALT(6, "SYSTEM.c", 133);
+}
+
+/*--------------------------------- Cut here ---------------------------------*/
+INTEGER SYSTEM_DIV (INTEGER x, INTEGER y)
+{
+  if (y > 0) {
+    if (x < 0) return -1 - (-1 - x) / y;
+    else       return x / y;
+  }
+  if (y < 0) {
+    if (x > 0) return -1 + (x - 1) / y;
+    else       return x / y;
+  }
+  __HALT(6, "SYSTEM.c", 148);
+}
+
+/*--------------------------------- Cut here ---------------------------------*/
+LONGINT SYSTEM_DIVL (LONGINT x, LONGINT y)
+{
+  if (y > 0) {
+    if (x < 0) return -1 - (-1 - x) / y;
+    else       return x / y;
+  }
+  if (y < 0) {
+    if (x > 0) return -1 + (x - 1) / y;
+    else       return x / y;
+  }
+  __HALT(6, "SYSTEM.c", 161);
+}
+
+/*--------------------------------- Cut here ---------------------------------*/
+SHORTINT SYSTEM_MODS (SHORTINT x, SHORTINT y)
+{
+  if (y > 0) {
+    if (x < 0) return y - 1 + (x + 1) % y;
+    else       return x % y;
+  }
+  if (y < 0) {
+    if (x > 0) return y + 1 + (x - 1) % y;
+    else       return x % y;
+  }
+  __HALT(6, "SYSTEM.c", 175);
+}
+
+/*--------------------------------- Cut here ---------------------------------*/
+INTEGER SYSTEM_MOD (INTEGER x, INTEGER y)
+{
+  if (y > 0) {
+    if (x < 0) return y - 1 + (x + 1) % y;
+    else       return x % y;
+  }
+  if (y < 0) {
+    if (x > 0) return y + 1 + (x - 1) % y;
+    else       return x % y;
+  }
+  __HALT(6, "SYSTEM.c", 189);
+}
+
+/*--------------------------------- Cut here ---------------------------------*/
+LONGINT SYSTEM_MODL (LONGINT x, LONGINT y)
+{
+  if (y > 0) {
+    if (x < 0) return y - 1 + (x + 1) % y;
+    else       return x % y;
+  }
+  if (y < 0) {
+    if (x > 0) return y + 1 + (x - 1) % y;
+    else       return x % y;
+  }
+  __HALT(6, "SYSTEM.c", 203);
+}
 
 /*--------------------------------- Cut here ---------------------------------*/
 SYSTEM_PTR SYSTEM_NEWBLK (__U_SHORTINT size)
