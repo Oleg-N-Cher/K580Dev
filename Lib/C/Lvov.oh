@@ -1,0 +1,23 @@
+#ifndef Lvov__oh
+#define Lvov__oh
+
+
+extern void Lvov_CLS (unsigned char border) __z88dk_fastcall;
+extern void Lvov_PSET (unsigned char x, unsigned char y,
+  unsigned char color) __z88dk_callee;
+extern void Lvov_PRESET (unsigned char x, unsigned char y) __z88dk_callee;
+extern void Lvov_LINE (unsigned char x1, unsigned char y1,
+  unsigned char x2, unsigned char y2, unsigned char color) __z88dk_callee;
+extern void Lvov_BOX (unsigned char x1, unsigned char y1,
+  unsigned char x2, unsigned char y2, unsigned char color) __z88dk_callee;
+extern void Lvov_FIL_BOX (unsigned char x1, unsigned char y1,
+  unsigned char x2, unsigned char y2, unsigned char color) __z88dk_callee;
+extern void Lvov_PAINT (unsigned char x, unsigned char y,
+  unsigned char grf_color, unsigned char brd_color) __z88dk_callee;
+extern void Lvov_COLOR (unsigned char ground, unsigned char palette)
+  __z88dk_callee;
+extern void Lvov_COPY (void);
+
+#define Lvov__init()
+
+#endif

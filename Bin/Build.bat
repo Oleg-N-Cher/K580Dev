@@ -17,7 +17,7 @@ SET Include=%SaveInclude%
 
 SET Options=%Options% +rk86 -O3
 SET Include=%Include% -I%K580Dev%\Lib\C -I%K580Dev%\Lib\Obj
-SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86 -lXDev
+SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86 -lLvov -lXDev
 IF "%Clean%"=="" SET Clean=TRUE
 IF "%Start%"=="" SET Start=TRUE
 IF "%Pause%"=="" SET Pause=FALSE
@@ -38,8 +38,18 @@ GOTO Link
 
 IF errorlevel 1 PAUSE
 
+IF "%FileExt%"=="lvt" GOTO Lviv
+
+:RK86
 %K580Dev%\Bin\bin2rk.exe %MainMod%.bin >NUL
 MOVE %MainMod%.rk ..\%MainMod%.%FileExt% >NUL
+GOTO AfterLink
+
+:Lviv
+%K580Dev%\Bin\MakeLvov\MakeLvov.exe %MainMod% >NUL
+MOVE %MainMod%.lvt .. >NUL
+
+:AfterLink
 
 IF NOT "%Clean%"=="TRUE" GOTO Done
 DEL *.bin %MainMod%.oh %MainMod%.o
