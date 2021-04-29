@@ -7,7 +7,6 @@ CONST
   CodeMaxSize = 0BE00H;
 
 VAR
-  (* ZX Spectrum binary data: *)
   name: Cmd.String; (* A tape/code name. *)
   code: ARRAY CodeMaxSize OF SYSTEM.BYTE; codeLen: INT32;
   codeStartAddr: INT32;
@@ -51,29 +50,18 @@ BEGIN
   END;
 END CreateLVT;
 
-PROCEDURE MakeLvov;
-VAR
-  separator: ARRAY 3 + 1 OF Cmd.Char;
-BEGIN (* ShowTitle: *)
+BEGIN (*$MAIN*)
   WriteStrLn("MakeLvov v1.0: convert a binary file to Lvov .lvt format");
   WriteStrLn("Copyright (C) 2021 Oleg N. Cher, VEDAsoft Oberon Club" );
-  WriteStrLn("  https://github.com/Oleg-N-Cher/makelvov");
+  WriteStrLn("  https://github.com/Oleg-N-Cher/K580Dev");
   IO.WriteLn;
   CASE Cmd.ParamCount OF
   | 1: (* One parameter as input binary file name and output tape name: *)
     Cmd.GetParam(1, @name); codeStartAddr := 0; CreateLVT;
   | 2: (* Two parameters as input binary file name and code address: *)
-    Cmd.GetParam(1, @name); Cmd.GetParamInt(1, @codeStartAddr); CreateLVT;
+    Cmd.GetParam(1, @name); Cmd.GetParamInt(2, @codeStartAddr); CreateLVT;
   ELSE (* ShowUsage: *)
     WriteStrLn("Usage: makelvov filename [starting address]");
     WriteStrLn("  Example: makelvov mygame 16384"); HALT(1)
   END;
-END MakeLvov;
-
-BEGIN (*$MAIN*)
-  MakeLvov;
 END MakeLvov.
-
-(* TODO:
-  implement supporting the Intel IHX format.
-*)

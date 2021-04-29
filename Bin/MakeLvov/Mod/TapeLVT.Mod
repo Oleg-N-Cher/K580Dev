@@ -12,7 +12,6 @@ TYPE
     file: Files.FileToWrite;
     error-: BOOLEAN; (** Was there an error during the work? *)
     errcode-: WORD;  (** A code of the first occurred error. *)
-    checksum: SET;   (* BITS *)
   END;
 
 (*----------------------------------------------------------------------------*)
@@ -27,8 +26,6 @@ PROCEDURE (VAR tap: TapeFile) SaveByte (byte: BYTE);
 BEGIN
   IF ~tap.error THEN
     tap.file.WriteByte(byte); tap.error := tap.file.error;
-    (* tap.checksum := tap.checksum XOR b *)
-    tap.checksum := tap.checksum / BITS(byte);
   END;
 END SaveByte;
 
@@ -98,17 +95,6 @@ END SaveCodeHeader;
 (*----------------------------------------------------------------------------*)
 PROCEDURE (VAR tap: TapeFile) SaveDataBlock (
   dataLength: INTEGER; VAR data: ARRAY OF BYTE);
-(*
-================================================================================
-|     Standard data blocks or custom data blocks - (2+[data length]) bytes     |
-+---------------------------------+--------------------------------------------+
-Ofs: Field type: Len: Description:| Additional information:                    |
---+--------------+--+-------------+--------------------------------------------+
- 0|     BYTE     | 1|  flag byte  | = 255 - a standard ROM loading data block. |
- 1| ARRAY OF BYTE| ?|  data block | The essential data block (may be empty).   |
-1+[data len] BYTE| 1|checksum byte|Simply all bytes (including flag byte) XORed|
-==+==============+==+=============+============================================+
-*)
 VAR
   i: INTEGER;
 BEGIN
