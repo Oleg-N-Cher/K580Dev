@@ -11,7 +11,7 @@ typedef
 
 
 
-import void CmdLine_GetParam (BYTE n, CHAR *param, SHORTINT param__len);
+import void CmdLine_GetParam (CHAR n, CHAR *param, SHORTINT param__len);
 #define CmdLine__init()
 
 

@@ -1,0 +1,11 @@
+#ifndef Timer__oh
+#define Timer__oh
+
+
+void Timer_DelayByte (unsigned char b) __z88dk_fastcall;
+void Timer_DelayWord (unsigned int w) __z88dk_fastcall;
+
+#define Timer__init()
+
+
+#endif

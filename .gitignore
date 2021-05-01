@@ -1,5 +1,6 @@
-*.c
 *.o
-*.oh
 *.sym
-
+Lib/Obj/*.oh
+Lib/Obj/*.c
+Obj/*.oh
+Obj/*.c
