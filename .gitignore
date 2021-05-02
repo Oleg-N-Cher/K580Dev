@@ -1,5 +1,7 @@
 *.o
-*.sym
+Bin/MakeLvov/Obj/*.c
+Bin/MakeLvov/Obj/*.oh
+Bin/MakeLvov/Sym/*.sym
 Lib/Obj/*.oh
 Lib/Obj/*.c
 Obj/*.oh
