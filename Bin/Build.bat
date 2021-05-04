@@ -15,7 +15,8 @@ SET Include=%SaveInclude%
 
 :Build
 
-SET Options=%Options% +rk86 -O3
+IF "%CodeAdr%"=="" SET CodeAdr=0
+SET Options=%Options% -zorg=%CodeAdr% -O3
 SET Include=%Include% -I%K580Dev%\Lib\C -I%K580Dev%\Lib\Obj
 SET Libraries=%Libraries% -L%K580Dev%\Lib -lRK86 -lLvov -lXDev
 IF "%Clean%"=="" SET Clean=TRUE
@@ -23,7 +24,7 @@ IF "%Start%"=="" SET Start=TRUE
 IF "%Pause%"=="" SET Pause=FALSE
 IF "%FileExt%"=="" SET FileExt=rk
 
-SET CC=zcc.exe %Options% %Modules% %Libraries%
+SET CC=zcc.exe +rk86 %Options% %Modules% %Libraries%
 
 IF EXIST %MainMod% GOTO Config
 
@@ -46,7 +47,7 @@ MOVE %MainMod%.rk ..\%MainMod%.%FileExt% >NUL
 GOTO AfterLink
 
 :Lviv
-%K580Dev%\Bin\MakeLvov\MakeLvov.exe %MainMod% >NUL
+%K580Dev%\Bin\MakeLvov\MakeLvov.exe %MainMod% %CodeAdr% >NUL
 MOVE %MainMod%.lvt .. >NUL
 
 :AfterLink

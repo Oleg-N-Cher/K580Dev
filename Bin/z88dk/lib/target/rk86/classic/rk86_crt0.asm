@@ -35,7 +35,7 @@
 	defc	CONSOLE_ROWS = 32
         INCLUDE "crt/classic/crt_rules.inc"
 
-        defc CRT_ORG_CODE = 0x0000
+        ;defc CRT_ORG_CODE = 0x0000
 
 	org	  CRT_ORG_CODE
 
@@ -54,10 +54,5 @@ program:
 IF DEFINED_USING_amalloc
     INCLUDE "crt/classic/crt_init_amalloc.asm"
 ENDIF
-	
-	call	_main
-	jmp $f875
 
-l_dcal: jp      (hl)            ;Used for function pointer calls
-
-
+	jmp	_main
