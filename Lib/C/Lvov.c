@@ -86,9 +86,9 @@ uint vaddr(uchar x, uchar y)                                   @ "lvov/vaddr.c";
 
 void Lvov_CLS (unsigned char border) __naked __z88dk_fastcall {
 #asm
-        LD   A, L
-        LD   (0xBE38), A  ; BORDER
-        JP   0xF836       ; CLS
+        MOV  A, L
+        STA  0xBE38       ; BORDER
+        JMP  0xF836       ; CLS
 #endasm
 } //Lvov_CLS
 
@@ -96,15 +96,15 @@ void Lvov_CLS (unsigned char border) __naked __z88dk_fastcall {
 void Lvov_PSET (unsigned char x, unsigned char y, unsigned char color)
   __naked __z88dk_callee {
 #asm
-        POP  HL
-        POP  BC           ; [color]
-        POP  DE           ; [y]
-        EX   (SP), HL     ; [x]
-        LD   H, E
-        LD   (0xBE50), HL ; X1, Y1
-        LD   A, C
-        LD   (0xBE52), A  ; GRF_COLOR
-        JP   0xF821       ; PSET
+        POP  H
+        POP  B            ; [color]
+        POP  D            ; [y]
+        XTHL              ; [x]
+        MOV  H, E
+        SHLD 0xBE50       ; X1, Y1
+        MOV  A, C
+        STA  0xBE52       ; GRF_COLOR
+        JMP  0xF821       ; PSET
 #endasm
 } //Lviv_PSET
 
@@ -112,12 +112,12 @@ void Lvov_PSET (unsigned char x, unsigned char y, unsigned char color)
 void Lvov_PRESET (unsigned char x, unsigned char y)
   __naked __z88dk_callee {
 #asm
-        POP  HL
-        POP  DE           ; [y]
-        EX   (SP), HL     ; [x]
-        LD   H, E
-        LD   (0xBE50), HL ; X1, Y1
-        JP   0xF020       ; PSET
+        POP  H
+        POP  D            ; [y]
+        XTHL              ; [x]
+        MOV  H, E
+        SHLD 0xBE50       ; X1, Y1
+        JMP  0xF020       ; PSET
 #endasm
 } //Lvov_PRESET
 
@@ -125,20 +125,20 @@ void Lvov_PRESET (unsigned char x, unsigned char y)
 void Lvov_LINE (unsigned char x1, unsigned char y1, unsigned char x2,
   unsigned char y2, unsigned char color) __naked __z88dk_callee {
 #asm
-        POP  BC
-        POP  DE           ; [color]
-        LD   A, E
-        LD   (0xBE52), A  ; GRF_COLOR
-        POP  DE           ; [y2]
-        POP  HL           ; [x2]
-        LD   H, E
-        LD   (0xBE57), HL ; X2, Y2
-        POP  DE           ; [y2]
-        POP  HL           ; [x2]
-        LD   H, E
-        LD   (0xBE50), HL ; X1, Y1
-        PUSH BC
-        JP   0xF824       ; LINE
+        POP  B
+        POP  D            ; [color]
+        MOV  A, E
+        STA  0xBE52       ; GRF_COLOR
+        POP  D            ; [y2]
+        POP  H            ; [x2]
+        MOV  H, E
+        SHLD 0xBE57       ; X2, Y2
+        POP  D            ; [y2]
+        POP  H            ; [x2]
+        MOV  H, E
+        SHLD 0xBE50       ; X1, Y1
+        PUSH B 
+        JMP  0xF824       ; LINE
 #endasm
 } //Lvov_LINE
 
@@ -146,20 +146,20 @@ void Lvov_LINE (unsigned char x1, unsigned char y1, unsigned char x2,
 void Lvov_BOX (unsigned char x1, unsigned char y1, unsigned char x2,
   unsigned char y2, unsigned char color) __naked __z88dk_callee {
 #asm
-        POP  BC
-        POP  DE           ; [color]
-        LD   A, E
-        LD   (0xBE52), A  ; GRF_COLOR
-        POP  DE           ; [y2]
-        POP  HL           ; [x2]
-        LD   H, E
-        LD   (0xBE57), HL ; X2, Y2
-        POP  DE           ; [y2]
-        POP  HL           ; [x2]
-        LD   H, E
-        LD   (0xBE50), HL ; X1, Y1
-        PUSH BC
-        JP   0xF827       ; BOX
+        POP  B
+        POP  D            ; [color]
+        MOV  A, E
+        STA  0xBE52       ; GRF_COLOR
+        POP  D            ; [y2]
+        POP  H            ; [x2]
+        MOV  H, E
+        SHLD 0xBE57       ; X2, Y2
+        POP  D            ; [y2]
+        POP  H            ; [x2]
+        MOV  H, E
+        SHLD 0xBE50       ; X1, Y1
+        PUSH B
+        JMP  0xF827       ; BOX
 #endasm
 } //Lvov_BOX
 
@@ -167,20 +167,20 @@ void Lvov_BOX (unsigned char x1, unsigned char y1, unsigned char x2,
 void Lvov_FIL_BOX (unsigned char x1, unsigned char y1, unsigned char x2,
   unsigned char y2, unsigned char color) __naked __z88dk_callee {
 #asm
-        POP  BC
-        POP  DE           ; [color]
-        LD   A, E
-        LD   (0xBE52), A  ; GRF_COLOR
-        POP  DE           ; [y2]
-        POP  HL           ; [x2]
-        LD   H, E
-        LD   (0xBE57), HL ; X2, Y2
-        POP  DE           ; [y2]
-        POP  HL           ; [x2]
-        LD   H, E
-        LD   (0xBE50), HL ; X1, Y1
-        PUSH BC
-        JP   0xF82A       ; FIL_BOX
+        POP  B
+        POP  D            ; [color]
+        MOV  A, E
+        STA  0xBE52       ; GRF_COLOR
+        POP  D            ; [y2]
+        POP  H            ; [x2]
+        MOV  H, E
+        SHLD 0xBE57       ; X2, Y2
+        POP  D            ; [y2]
+        POP  H            ; [x2]
+        MOV  H, E
+        SHLD 0xBE50       ; X1, Y1
+        PUSH B
+        JMP  0xF82A       ; FIL_BOX
 #endasm
 } //Lvov_FIL_BOX
 
@@ -188,19 +188,19 @@ void Lvov_FIL_BOX (unsigned char x1, unsigned char y1, unsigned char x2,
 void Lvov_PAINT (unsigned char x, unsigned char y,
   unsigned char grf_color, unsigned char brd_color) __naked __z88dk_callee {
 #asm
-        POP  BC
-        POP  DE           ; [brd_color]
-        LD   A, E
-        LD   (0xBEA3), A  ; BRD_COLOR
-        POP  DE           ; [color]
-        LD   A, E
-        LD   (0xBE52), A  ; GRF_COLOR
-        POP  DE           ; [y]
-        POP  HL           ; [x]
-        LD   H, E
-        LD   (0xBE50), HL ; X1, Y1
-        PUSH BC
-        JP   0xF830       ; PAINT
+        POP  B
+        POP  D            ; [brd_color]
+        MOV  A, E
+        STA  0xBEA3       ; BRD_COLOR
+        POP  D            ; [color]
+        MOV  A, E
+        STA  0xBE52       ; GRF_COLOR
+        POP  D            ; [y]
+        POP  H            ; [x]
+        MOV  H, E
+        LHLD 0xBE50       ; X1, Y1
+        PUSH B
+        JMP  0xF830       ; PAINT
 #endasm
 } //Lvov_PAINT
 
@@ -208,25 +208,25 @@ void Lvov_PAINT (unsigned char x, unsigned char y,
 void Lvov_COLOR (unsigned char ground, unsigned char palette)
   __naked __z88dk_callee {
 #asm
-        POP  HL
-        POP  DE           ; [palette]
-        EX   (SP), HL     ; [ground]
-        LD   H, E
-        LD   (0xBEC0), HL ; PALETTE, GROUND
-        JP   0xF833       ; COLOR
+        POP  H
+        POP  D            ; [palette]
+        XTHL              ; [ground]
+        MOV  H, E
+        SHLD 0xBEC0       ; PALETTE, GROUND
+        JMP  0xF833       ; COLOR
 #endasm
 } //Lvov_COLOR
 
 /*--------------------------------- Cut here ---------------------------------*/
 void Lvov_COPY (void) __naked {
 #asm
-        JP   0xE627       ; COPY
+        JMP  0xE627       ; COPY
 #endasm
 } //Lvov_COPY
 
 /*--------------------------------- Cut here ---------------------------------*/
-void RK86_QUIT (void) __naked {
+void Lvov_HLT (void) __naked {
   #asm
-        JP   0F875H    ; ВЫХОД В МОНИТОР
+        HLT
   #endasm
-} //RK86_QUIT
+} //Lvov_HLT
