@@ -4,7 +4,7 @@ IMPORT
   SYSTEM, IO := Console, Cmd := CmdLine, Files, TapeLVT;
 
 CONST
-  CodeMaxSize = 0C000H; (* {0H..0BFFFFH} *)
+  CodeMaxSize = 0C000H; (* {0H..0BFFFH} *)
 
 VAR
   name: Cmd.String; (* A tape/code name. *)
