@@ -6,13 +6,12 @@
 #include "SYSTEM.oh"
 
 typedef
-	CHAR CmdLine_String [1];
+  CHAR CmdLine_String[1];
 
 
 
 
 import void CmdLine_GetParam (CHAR n, CHAR *param, SHORTINT param__len);
-#define CmdLine__init()
 
 
 #endif
